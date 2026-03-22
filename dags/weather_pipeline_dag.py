@@ -20,9 +20,11 @@ from airflow import DAG
 from airflow.operators.python import PythonOperator
 
 # ---------------------------------------------------------------------------
-# Make scripts/ and database/ importable inside Airflow Docker
+# Fix Python path — point directly to /opt/airflow where scripts/ lives
 # ---------------------------------------------------------------------------
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
+AIRFLOW_HOME = "/opt/airflow"
+if AIRFLOW_HOME not in sys.path:
+    sys.path.insert(0, AIRFLOW_HOME)
 
 logger = logging.getLogger(__name__)
 
@@ -80,6 +82,7 @@ def run_weather_extraction(**context) -> None:
     logger.info("TASK 2 — Starting weather data extraction...")
     logger.info("=" * 60)
 
+    # Import here — after sys.path is fixed
     from scripts.extract_weather import extract_weather_data
 
     df = extract_weather_data()
@@ -89,7 +92,6 @@ def run_weather_extraction(**context) -> None:
 
     logger.info(f"Extracted {len(df)} city records successfully.")
 
-    # Push to XCom as JSON for the next task
     context["ti"].xcom_push(key="weather_data",  value=df.to_json(orient="records"))
     context["ti"].xcom_push(key="row_count",     value=len(df))
     context["ti"].xcom_push(key="sample_cities", value=df["city"].tolist()[:3])
@@ -108,20 +110,17 @@ def store_weather_data(**context) -> None:
     import pandas as pd
     from database.repository import create_tables, save_weather_records
 
-    # Pull extracted data from XCom
     ti           = context["ti"]
     weather_json = ti.xcom_pull(task_ids="extract_weather_data", key="weather_data")
 
     if not weather_json:
-        raise ValueError("No weather data found in XCom. Extraction may have failed.")
+        raise ValueError("No weather data found in XCom.")
 
     df = pd.read_json(weather_json, orient="records")
     logger.info(f"Pulled {len(df)} records from XCom.")
 
-    # Ensure tables exist
     create_tables()
 
-    # Save records
     result = save_weather_records(df)
 
     logger.info(
@@ -131,7 +130,6 @@ def store_weather_data(**context) -> None:
         f"Failed: {result['failed']}"
     )
 
-    # Push storage summary to XCom
     ti.xcom_push(key="inserted", value=result["inserted"])
     ti.xcom_push(key="skipped",  value=result["skipped"])
 
@@ -189,8 +187,5 @@ with dag:
         provide_context=True,
     )
 
-    # -----------------------------------------------------------------------
     # Task execution order
-    # validate → extract → store → summary
-    # -----------------------------------------------------------------------
     task_validate_key >> task_extract_data >> task_store_data >> task_log_summary

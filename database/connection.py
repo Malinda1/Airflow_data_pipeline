@@ -1,12 +1,21 @@
 """
 connection.py
 -------------
-Manages the PostgreSQL database connection using SQLAlchemy.
-Reads credentials from environment variables — never hardcoded.
+Manages PostgreSQL connection using environment variables.
+Uses hardcoded /opt/airflow path for reliable imports inside Docker.
 """
 
 import os
-from sqlalchemy import create_engine, Engine
+import sys
+
+# ---------------------------------------------------------------------------
+# Fix Python path for Airflow Docker environment
+# ---------------------------------------------------------------------------
+AIRFLOW_HOME = "/opt/airflow"
+if AIRFLOW_HOME not in sys.path:
+    sys.path.insert(0, AIRFLOW_HOME)
+
+from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, Session
 from scripts.utils.logger import get_logger
 
@@ -14,15 +23,6 @@ logger = get_logger(__name__)
 
 
 def get_db_url() -> str:
-    """
-    Builds the PostgreSQL connection URL from environment variables.
-
-    Returns:
-        str: SQLAlchemy-compatible connection URL.
-
-    Raises:
-        EnvironmentError: If any required env variable is missing.
-    """
     user     = os.getenv("POSTGRES_USER")
     password = os.getenv("POSTGRES_PASSWORD")
     host     = os.getenv("POSTGRES_HOST")
@@ -48,32 +48,20 @@ def get_db_url() -> str:
     return url
 
 
-def get_engine() -> Engine:
-    """
-    Creates and returns a SQLAlchemy engine.
-
-    Returns:
-        Engine: SQLAlchemy engine connected to PostgreSQL.
-    """
-    url = get_db_url()
+def get_engine():
+    url    = get_db_url()
     engine = create_engine(
         url,
-        pool_pre_ping=True,       # Checks connection health before using it
-        pool_size=5,              # Max 5 persistent connections
-        max_overflow=10,          # Allow 10 extra connections under load
-        echo=False,               # Set True to log all SQL queries (debug only)
+        pool_pre_ping=True,
+        pool_size=5,
+        max_overflow=10,
+        echo=False,
     )
     logger.info("SQLAlchemy engine created successfully.")
     return engine
 
 
 def get_session() -> Session:
-    """
-    Creates and returns a new SQLAlchemy session.
-
-    Returns:
-        Session: Active database session.
-    """
-    engine        = get_engine()
-    SessionLocal  = sessionmaker(bind=engine, autocommit=False, autoflush=False)
+    engine       = get_engine()
+    SessionLocal = sessionmaker(bind=engine, autocommit=False, autoflush=False)
     return SessionLocal()
