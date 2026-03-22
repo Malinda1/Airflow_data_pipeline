@@ -32,17 +32,66 @@ logger = get_logger(__name__)
 API_KEY   = os.getenv("OPENWEATHER_API_KEY")
 BASE_URL  = "https://api.openweathermap.org/data/2.5/weather"
 UNITS     = "metric"          # Celsius. Use "imperial" for Fahrenheit
-CITIES    = [
+CITIES = [
+    # Europe
     "London",
-    "New York",
-    "Tokyo",
     "Paris",
-    "Sydney",
+    "Berlin",
+    "Rome",
+    "Madrid",
+    "Amsterdam",
+    "Vienna",
+    "Stockholm",
+    "Oslo",
+    "Zurich",
+    "Brussels",
+    "Lisbon",
+    "Athens",
+    "Prague",
+    "Budapest",
+
+    # Asia
+    "Tokyo",
+    "Singapore",
     "Dubai",
     "Colombo",
-    "Singapore",
-    "Berlin",
+    "Mumbai",
+    "Bangkok",
+    "Seoul",
+    "Beijing",
+    "Kuala Lumpur",
+    "Jakarta",
+    "Hong Kong",
+    "Karachi",
+    "Dhaka",
+    "Riyadh",
+    "Doha",
+
+    # Americas
+    "New York",
     "Toronto",
+    "Los Angeles",
+    "Chicago",
+    "Sao Paulo",
+    "Mexico City",
+    "Buenos Aires",
+    "Lima",
+    "Bogota",
+    "Santiago",
+
+    # Oceania
+    "Sydney",
+    "Melbourne",
+    "Auckland",
+    "Brisbane",
+
+    # Africa
+    "Cape Town",
+    "Cairo",
+    "Lagos",
+    "Nairobi",
+    "Casablanca",
+    "Johannesburg",
 ]
 
 # ---------------------------------------------------------------------------
