@@ -23,12 +23,8 @@ load_dotenv()
 # ---------------------------------------------------------------------------
 # Logging configuration
 # ---------------------------------------------------------------------------
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s | %(levelname)s | %(message)s",
-    datefmt="%Y-%m-%d %H:%M:%S",
-)
-logger = logging.getLogger(__name__)
+from scripts.utils.logger import get_logger
+logger = get_logger(__name__)
 
 # ---------------------------------------------------------------------------
 # Constants
