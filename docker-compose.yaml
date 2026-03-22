@@ -71,6 +71,12 @@ x-airflow-common:
     # for other purpose (development, test and especially production usage) build/extend Airflow image.
     #_PIP_ADDITIONAL_REQUIREMENTS: "requests==2.31.0 pandas==2.2.0 python-dotenv==1.0.0 pyarrow==15.0.0"
     OPENWEATHER_API_KEY: ${OPENWEATHER_API_KEY}
+
+    POSTGRES_USER: airflow
+    POSTGRES_PASSWORD: airflow
+    POSTGRES_HOST: postgres
+    POSTGRES_PORT: 5432
+    POSTGRES_DB: airflow
     # The following line can be used to set a custom config file, stored in the local config folder
     # If you want to use it, outcomment it and replace airflow.cfg with the name of your config file
     # AIRFLOW_CONFIG: '/opt/airflow/config/airflow.cfg'

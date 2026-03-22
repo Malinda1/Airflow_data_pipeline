@@ -481,3 +481,10 @@
 [2026-03-22T05:58:20.654+0000] {logging_mixin.py:188} INFO - [2026-03-22T05:58:20.146+0000] {dag.py:3096} INFO - Sync 1 DAGs
 [2026-03-22T05:58:23.353+0000] {logging_mixin.py:188} INFO - [2026-03-22T05:58:23.136+0000] {dag.py:3954} INFO - Setting next_dagrun for example_passing_params_via_test_command to 2026-03-22 05:57:00+00:00, run_after=2026-03-22 05:58:00+00:00
 [2026-03-22T05:58:29.182+0000] {processor.py:183} INFO - Processing /home/airflow/.local/lib/python3.12/site-packages/airflow/example_dags/example_passing_params_via_test_command.py took 23.238 seconds
+[2026-03-22T06:04:29.728+0000] {processor.py:161} INFO - Started process (PID=1007) to work on /home/airflow/.local/lib/python3.12/site-packages/airflow/example_dags/example_passing_params_via_test_command.py
+[2026-03-22T06:04:29.889+0000] {processor.py:830} INFO - Processing file /home/airflow/.local/lib/python3.12/site-packages/airflow/example_dags/example_passing_params_via_test_command.py for tasks to queue
+[2026-03-22T06:04:29.973+0000] {logging_mixin.py:188} INFO - [2026-03-22T06:04:29.932+0000] {dagbag.py:545} INFO - Filling up the DagBag from /home/airflow/.local/lib/python3.12/site-packages/airflow/example_dags/example_passing_params_via_test_command.py
+[2026-03-22T06:04:33.486+0000] {processor.py:840} INFO - DAG(s) 'example_passing_params_via_test_command' retrieved from /home/airflow/.local/lib/python3.12/site-packages/airflow/example_dags/example_passing_params_via_test_command.py
+[2026-03-22T06:04:36.929+0000] {logging_mixin.py:188} INFO - [2026-03-22T06:04:36.914+0000] {dag.py:3096} INFO - Sync 1 DAGs
+[2026-03-22T06:04:40.893+0000] {logging_mixin.py:188} INFO - [2026-03-22T06:04:40.821+0000] {dag.py:3954} INFO - Setting next_dagrun for example_passing_params_via_test_command to 2026-03-22 06:03:00+00:00, run_after=2026-03-22 06:04:00+00:00
+[2026-03-22T06:04:43.991+0000] {processor.py:183} INFO - Processing /home/airflow/.local/lib/python3.12/site-packages/airflow/example_dags/example_passing_params_via_test_command.py took 20.582 seconds
