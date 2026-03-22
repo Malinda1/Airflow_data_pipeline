@@ -497,3 +497,7 @@
 [2026-03-22T06:02:44.365+0000] {processor.py:830} INFO - Processing file /home/airflow/.local/lib/python3.12/site-packages/airflow/example_dags/example_dag_decorator.py for tasks to queue
 [2026-03-22T06:02:44.490+0000] {logging_mixin.py:188} INFO - [2026-03-22T06:02:44.403+0000] {dagbag.py:545} INFO - Filling up the DagBag from /home/airflow/.local/lib/python3.12/site-packages/airflow/example_dags/example_dag_decorator.py
 [2026-03-22T06:03:02.135+0000] {processor.py:840} INFO - DAG(s) 'example_dag_decorator' retrieved from /home/airflow/.local/lib/python3.12/site-packages/airflow/example_dags/example_dag_decorator.py
+[2026-03-22T06:08:48.877+0000] {processor.py:161} INFO - Started process (PID=1086) to work on /home/airflow/.local/lib/python3.12/site-packages/airflow/example_dags/example_dag_decorator.py
+[2026-03-22T06:08:48.933+0000] {processor.py:830} INFO - Processing file /home/airflow/.local/lib/python3.12/site-packages/airflow/example_dags/example_dag_decorator.py for tasks to queue
+[2026-03-22T06:08:49.286+0000] {logging_mixin.py:188} INFO - [2026-03-22T06:08:49.234+0000] {dagbag.py:545} INFO - Filling up the DagBag from /home/airflow/.local/lib/python3.12/site-packages/airflow/example_dags/example_dag_decorator.py
+[2026-03-22T06:09:19.914+0000] {logging_mixin.py:188} INFO - [2026-03-22T06:09:19.832+0000] {timeout.py:68} ERROR - Process timed out, PID: 1086
